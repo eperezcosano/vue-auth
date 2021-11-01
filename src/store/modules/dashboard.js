@@ -3,22 +3,23 @@ import { get, handleResponse } from '../../http-common'
 export const dashboard = {
     namespaced: true,
     state: {
-        cache: []
+        userList: []
     },
     mutations: {
-        SET_DATA(state, data) {
-            state.cache = data
+        SET_USER_LIST(state, data) {
+            state.userList = data
         }
     },
     actions: {
         getUsers({ commit, rootGetters}) {
             const req = get('/dashboard/users', rootGetters["auth/getToken"])
-            return handleResponse(req, commit, rootGetters["auth/isLogged"]).then(res => {
-                commit('SET_DATA', res)
-                return res
-            })
+            handleResponse(req, commit, rootGetters["auth/isLogged"]).then(res => commit('SET_USER_LIST', res))
         }
     },
-    getters: {}
+    getters: {
+        getUsersList(state) {
+            return state.userList
+        }
+    }
 
 }

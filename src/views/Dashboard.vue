@@ -9,19 +9,19 @@
 
 <script>
 
+
 export default {
   name: 'Dashboard',
   components: {},
   data() {
     return {
-      isLoading: false,
       users: []
     }
   },
   created() {
-    this.$store
-        .dispatch('dashboard/getUsers')
-        .then(data => { this.users = data })
+    this.$store.dispatch('dashboard/getUsers').then(() => {
+      this.users = this.$store.getters['dashboard/getUsersList']
+    })
   }
 }
 </script>

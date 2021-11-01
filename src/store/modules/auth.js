@@ -14,7 +14,7 @@ export const auth = {
         },
         LOGOUT() {
             localStorage.removeItem('user')
-            //state.user = null
+            state.user = null
             location.reload()
         }
     },
@@ -25,7 +25,7 @@ export const auth = {
         },
         validate({commit, getters}) {
             if (!getters.isLogged) return Promise.resolve()
-            return get('/validate', getters.getToken).then(res => {
+            return get('/validate', getters.getToken).then(() => {
                 return Promise.resolve()
             }).catch(err => {
                 if (err.response.status === 401 && getters.isLogged) commit('LOGOUT')
