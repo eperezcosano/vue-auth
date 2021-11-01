@@ -19,8 +19,8 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('dashboard/getUsers').then(() => {
-      this.users = this.$store.getters['dashboard/getUsersList']
+    this.$store.dispatch('dashboard/getUsers').then((res) => {
+      this.users = res
     })
   }
 }

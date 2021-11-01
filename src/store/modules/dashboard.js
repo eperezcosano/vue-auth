@@ -13,7 +13,11 @@ export const dashboard = {
     actions: {
         getUsers({ commit, rootGetters}) {
             const req = get('/dashboard/users', rootGetters["auth/getToken"])
-            handleResponse(req, commit, rootGetters["auth/isLogged"]).then(res => commit('SET_USER_LIST', res))
+            return handleResponse(req, commit, rootGetters["auth/isLogged"])
+                .then(res => {
+                    commit('SET_USER_LIST', res)
+                    return res
+                })
         }
     },
     getters: {

@@ -32,9 +32,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   const authRequired = to.matched.some(record => record.meta.requiresAuth)
-  if (!authRequired) return next()
-  if (!store.getters['auth/isLogged']) return next('/')
-  return store.dispatch('auth/validate').then(() => next()).catch(() => next('/'))
+  if (!authRequired) {
+    return next()
+  }
+  if (!store.getters['auth/isLogged']) {
+    return next('/')
+  }
+  return store.dispatch('auth/validate')
+      .then(() => { return next() })
+      .catch(() => { return next('/')})
 
 })
 
