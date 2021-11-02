@@ -12,7 +12,7 @@ export const auth = {
             localStorage.setItem('user', JSON.stringify(user))
             state.user = user
         },
-        LOGOUT() {
+        LOGOUT(state) {
             localStorage.removeItem('user')
             state.user = null
             location.reload()
@@ -24,13 +24,9 @@ export const auth = {
             return handleResponse(req, commit, getters.isLogged).then(res => commit('SET_DATA', res))
         },
         validate({commit, getters}) {
-            if (!getters.isLogged) return Promise.resolve()
-            return get('/validate', getters.getToken).then(() => {
-                return Promise.resolve()
-            }).catch(err => {
-                if (err.response.status === 401 && getters.isLogged) commit('LOGOUT')
-                return Promise.reject()
-            })
+            if (!getters.isLogged) return Promise.reject()
+            const req = get('/validate', getters.getToken)
+            return handleResponse(req, commit, getters.isLogged)
         },
         logout({ commit }) {
             commit('LOGOUT')

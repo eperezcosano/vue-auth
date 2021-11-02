@@ -13,15 +13,13 @@
 export default {
   name: 'Dashboard',
   components: {},
-  data() {
-    return {
-      users: []
+  computed: {
+    users() {
+      return this.$store.state.dashboard.userList
     }
   },
   created() {
-    this.$store.dispatch('dashboard/getUsers').then((res) => {
-      this.users = res
-    })
+    this.$store.dispatch('dashboard/getUsers')
   }
 }
 </script>

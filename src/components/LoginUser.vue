@@ -34,8 +34,7 @@ export default {
   },
   methods: {
     login() {
-      this.$store
-          .dispatch('auth/login', {
+      this.$store.dispatch('auth/login', {
             email: this.email,
             pass: this.pass
           })
